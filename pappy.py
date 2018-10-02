@@ -1,5 +1,11 @@
-from requests import get, post, put, delete, patch
+from requests import get, post, put, delete, patch, Session
 from box import Box
+
+def auth_session(auth=None):
+    session = Session()
+    if auth:
+        session.headers['Authorization'] = f'Bearer {auth}'
+    return session
 
 
 def body_for(request):
