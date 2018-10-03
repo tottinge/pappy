@@ -20,7 +20,7 @@ def body_for(request):
 
 def what():
     print("""Some things to try
-    * auth_session(auth=token) - make an authenticated session
+    * auth_session(auth=token, base=url) - make a session
     * body_for(request) - get the body of the request as an object
     * what() - print this.
     ---------------------------------------------------------------
