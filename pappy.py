@@ -1,6 +1,8 @@
 from requests import get, post, put, delete, patch, Session
 from box import Box
 
+
+
 def auth_session(auth=None):
     session = Session()
     if auth:
@@ -13,4 +15,12 @@ def body_for(request):
 
 "Should run with ipython -i for interactive usage"
 
-print("whoo: this is ready to rock")
+def what():
+    print("""Some things to try
+    * auth_session(auth=token) - make an authenticated session
+    * body_for(request) - get the body of the request as an object
+    * what() - print this.
+    ---------------------------------------------------------------
+    """)
+
+what()
