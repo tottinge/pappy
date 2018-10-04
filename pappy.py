@@ -19,7 +19,7 @@ def _load_extensions(path):
 
     sys.path.append(path)
     imports = [ filename 
-        for filename in os.listdir('local_extensions')
+        for filename in os.listdir(path)
         if not filename.startswith('__') 
             and not filename.startswith('.') 
         ]
@@ -31,7 +31,9 @@ def _load_extensions(path):
                 continue
             globals()[attribute_name] = getattr(module,attribute_name)
             print(f"* {attribute_name} <---({module_name})")
-_load_extensions('local_extensions')
+
+if os.path.isdir('local_extensions'):
+    _load_extensions('local_extensions')
 
 def auth_session(auth=None, base=None):
     import types
