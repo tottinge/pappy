@@ -20,7 +20,9 @@ def _load_extensions(path):
     sys.path.append(path)
     imports = [ filename 
         for filename in os.listdir('local_extensions')
-        if not filename.startswith('__') ]
+        if not filename.startswith('__') 
+            and not filename.startswith('.') 
+        ]
     for filename in imports:
         module_name, _ = os.path.splitext(filename)
         module = importlib.import_module(module_name)
