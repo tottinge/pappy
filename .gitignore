@@ -105,3 +105,6 @@ venv.bak/
 
 # ignore .idea folders (if any)
 .idea
+
+# Local extensions should not check in
+local_extensions

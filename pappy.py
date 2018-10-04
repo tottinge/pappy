@@ -1,5 +1,35 @@
 from requests import get, post, put, delete, patch, Session
 from box import Box
+import os
+
+def _load_extensions(path):
+    """
+    _load_extensions(path)
+
+    Where path is a directory containing extension modules, 
+    basically python scripts containing functions to make testing
+    easier.
+
+    Note: loads all python files in 'path' to the global namespace.
+    This has obvious risks. Don't override important python behaviors 
+    accidentally!
+    """
+    import sys  
+    import importlib
+
+    sys.path.append(path)
+    imports = [ filename 
+        for filename in os.listdir('local_extensions')
+        if not filename.startswith('__') ]
+    for filename in imports:
+        module_name, _ = os.path.splitext(filename)
+        module = importlib.import_module(module_name)
+        for attribute_name in dir(module):
+            if attribute_name.startswith('__'):
+                continue
+            globals()[attribute_name] = getattr(module,attribute_name)
+            print(f"* {attribute_name} <---({module_name})")
+_load_extensions('local_extensions')
 
 def auth_session(auth=None, base=None):
     import types
