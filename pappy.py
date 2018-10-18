@@ -14,6 +14,9 @@ def _load_extensions(path):
     This has obvious risks. Don't override important python behaviors 
     accidentally!
     """
+    if not os.path.isdir('local_extensions'):
+        return
+
     import sys  
     import importlib
 
@@ -29,8 +32,6 @@ def _load_extensions(path):
         for attribute_name in dir(module):
             if attribute_name.startswith('__'):
                 continue
-            globals()[attribute_name] = getattr(module,attribute_name)
-            print(f"* {attribute_name} <---({module_name})")
 
 if os.path.isdir('local_extensions'):
     _load_extensions('local_extensions')
@@ -46,11 +47,8 @@ def auth_session(auth=None, base=None):
     session.rget = types.MethodType(rget, session)
     return session
 
-def body_for(request):
-    return Box(request.json())
-
-"Should run with ipython -i for interactive usage"
-
+def body_for(response):
+    return Box(response.json())
 
 def what():
     print("""Some things to try
@@ -60,4 +58,5 @@ def what():
     ---------------------------------------------------------------
     """)
 
-what()
+if __name__ == "__main__":
+    what()
