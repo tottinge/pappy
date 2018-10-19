@@ -14,7 +14,10 @@ def _load_extensions(path):
     This has obvious risks. Don't override important python behaviors 
     accidentally!
     """
-    if not os.path.isdir('local_extensions'):
+    extension_dir = os.environ.get(path, path)
+    print(f"looking for extensions in {extension_dir}")
+    if not os.path.isdir(extension_dir):
+        print(f"No such {extension_dir}")
         return
 
     import sys  
@@ -32,6 +35,7 @@ def _load_extensions(path):
         for attribute_name in dir(module):
             if attribute_name.startswith('__'):
                 continue
+            globals()[attribute_name] = getattr(module, attribute_name)
 
 if os.path.isdir('local_extensions'):
     _load_extensions('local_extensions')
